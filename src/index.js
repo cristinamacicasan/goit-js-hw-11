@@ -1,13 +1,10 @@
-// Importuri
 import axios from "axios";
 import Notiflix from "notiflix";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
 
-// Setarea cheii de acces la API
-const API_KEY = "42285080-c22d5f6a90f49c0ab863c2d8a"; // Înlocuiți cu cheia dvs. unică de acces
+const API_KEY = "42285080-c22d5f6a90f49c0ab863c2d8a"; 
 
-// Funcție pentru căutarea imaginilor pe baza unui cuvânt cheie
 async function searchImages(query, page = 1) {
   try {
     const response = await axios.get("https://pixabay.com/api/", {
@@ -18,7 +15,7 @@ async function searchImages(query, page = 1) {
         orientation: "horizontal",
         safesearch: true,
         page: page,
-        per_page: 40, // 40 de imagini pe pagină
+        per_page: 40, 
       },
     });
     return response.data;
@@ -27,20 +24,17 @@ async function searchImages(query, page = 1) {
   }
 }
 
-// Funcție pentru afișarea notificării cu numărul total de imagini găsite
 function showTotalImagesFound(totalHits) {
   Notiflix.Notify.success(`Hooray! We found ${totalHits} images.`);
 }
 
-// Funcție pentru afișarea notificării la sfârșitul rezultatelor de căutare
 function showEndOfSearchResults() {
   Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
 }
 
-// Funcție pentru gestionarea afișării cardurilor de imagini în galerie
 function displayImages(images) {
   const gallery = document.querySelector(".gallery");
-  gallery.innerHTML = ""; // Șterge conținutul galeriei anterioare
+  gallery.innerHTML = ""; 
 
   images.forEach(image => {
     const photoCard = document.createElement("div");
@@ -59,12 +53,10 @@ function displayImages(images) {
     gallery.appendChild(photoCard);
   });
 
-  // Actualizarea galeriei cu ajutorul SimpleLightbox
   const lightbox = new SimpleLightbox(".gallery a", {});
   lightbox.refresh();
 }
 
-// Funcție pentru gestionarea căutării și afișării imaginilor
 async function handleSearch(event) {
   event.preventDefault();
   const searchQuery = event.target.searchQuery.value.trim();
@@ -89,7 +81,6 @@ async function handleSearch(event) {
   }
 }
 
-// Funcție pentru gestionarea încărcării suplimentare a imaginilor
 async function handleLoadMore(event) {
   event.preventDefault();
   const searchQuery = document.getElementById("searchQuery").value.trim();
@@ -112,14 +103,13 @@ async function handleLoadMore(event) {
   }
 }
 
-// Inițializarea aplicației
 function initializeApp() {
   const searchForm = document.getElementById("search-form");
   const loadMoreBtn = document.querySelector(".load-more");
 
   searchForm.addEventListener("submit", handleSearch);
   loadMoreBtn.addEventListener("click", handleLoadMore);
-  loadMoreBtn.style.display = "none"; // Inițial, butonul este ascuns
+  loadMoreBtn.style.display = "none"; 
 }
 
-initializeApp(); // Apelarea funcției pentru inițializarea aplicației
+initializeApp(); 
